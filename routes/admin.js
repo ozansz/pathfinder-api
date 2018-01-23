@@ -12,9 +12,9 @@ const vF = validate.validateFields;
 const resource_rf = ['name', 'type', 'link', 'price', 'duration',
   'start_topic', 'end_topic', 'requirements', 'contents', 'ptr', 'subject'];
 
-function pussyPass(hash){
+function ysnPass(hash){
   return function(req, res, next){
-    if((typeof req.body._pp != 'undefined' && hash == md5(req.body._pp)) || (typeof req.headers.pussypass != 'undefined' && hash == md5(req.headers.pussypass))){
+    if((typeof req.body._pp != 'undefined' && hash == md5(req.body._pp)) || (typeof req.headers.ysnpass != 'undefined' && hash == md5(req.headers.ysnpass))){
       req.body._pp = undefined;
       next();
     } else {
@@ -50,13 +50,14 @@ router.get('/subjects', (req, res, next) => {
       _clog(req);
       return res.status(200).json({
         success: true,
+        n_subjects: subjects.length,
         subjects: subjects
       });
     }
   });
 });
 
-router.post('/subjects', pussyPass('29f189b3bd9abacc3239cd96e82b1409'), vF(['name', 'topics', 'type']), (req, res, next) => {
+router.post('/subjects', vF(['name', 'topics', 'type']), (req, res, next) => {
   /*
   return res.status(403).json({
     success: false,
@@ -89,7 +90,7 @@ router.post('/subjects', pussyPass('29f189b3bd9abacc3239cd96e82b1409'), vF(['nam
   });
 });
 
-router.get('/resources', pussyPass('29f189b3bd9abacc3239cd96e82b1409'), (req, res, next) => {
+router.get('/resources', (req, res, next) => {
   Resource.find({}, {_id: 0, __v: 0, 'requirements._id': 0, 'subject._id': 0, 'subject.__v': 0}, (err, resources) => {
     if(err){
       return res.status(500).json({
@@ -110,13 +111,14 @@ router.get('/resources', pussyPass('29f189b3bd9abacc3239cd96e82b1409'), (req, re
       _clog(req, resources.length + ' documents transmitted');
       return res.status(200).json({
         success: true,
+        n_resources: resources.length,
         resources: resources
       });
     }
   });
 });
 
-router.post('/resources', pussyPass('29f189b3bd9abacc3239cd96e82b1409'), vF(resource_rf), (req, res, next) => {
+router.post('/resources', vF(resource_rf), (req, res, next) => {
   let newRes = {};
   for(let i = 0; i < resource_rf.length; i++){
     newRes[resource_rf[i]] = req.body[resource_rf[i]];
@@ -142,7 +144,7 @@ router.post('/resources', pussyPass('29f189b3bd9abacc3239cd96e82b1409'), vF(reso
   });
 });
 
-router.delete('/resources/:rid', pussyPass('29f189b3bd9abacc3239cd96e82b1409'), (req, res, next) => {
+router.delete('/resources/:rid', ysnPass('29f189b3bd9abacc3239cd96e82b1409'), (req, res, next) => {
   Resource.removeResByRID(req.params.rid, (err, ret) => {
     if(err){
       return res.status(500).json({

@@ -74,18 +74,29 @@ const ResourceSchema = mongoose.Schema({
 
 const Resource = mongoose.model('resource', ResourceSchema);
 
+Resource.getResourceByName = function(name, callback){
+  Resource.findOne({name: name}, callback);
+}
+
 Resource.addResource = function(newRes, callback){
-  Subject.getSubjectByName(newRes.subject, (err, found_subject) => {
+  Resource.getResourceByName(newRes.name, (err, found_res) => {
     if(err) callback(err, null);
-    if(found_subject){
-      newRes.subject = found_subject;
-      newRes = new Resource(newRes);
-      newRes.save((err, ret) => {
-        if(err) callback(err, null);
-        callback(null, ret);
-      });
+    if(found_res){
+      callback('Resource with this name already exists: ' + newRes.name, null);
     } else {
-      callback('Subject \'' + newRes.subject + '\' not found', null);
+      Subject.getSubjectByName(newRes.subject, (err, found_subject) => {
+        if(err) callback(err, null);
+        if(found_subject){
+          newRes.subject = found_subject;
+          newRes = new Resource(newRes);
+          newRes.save((err, ret) => {
+            if(err) callback(err, null);
+            callback(null, ret);
+          });
+        } else {
+          callback('Subject \'' + newRes.subject + '\' not found', null);
+        }
+      });
     }
   });
 }

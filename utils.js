@@ -1,7 +1,30 @@
+let ljust = (str, w, padding) => {
+  padding = padding || " ";
+  padding = padding.substr(0, 1);
+  if(str.length < w){
+    return str + padding.repeat(w - str.length);
+  } else {
+    return str;
+  }
+}
+
+let rjust = (str, w, padding) => {
+	padding = padding || " ";
+	padding = padding.substr(0, 1);
+	if (str.length < w){
+    return padding.repeat(w - str.length) + str;
+  } else {
+    return str;
+  }
+}
+
 module.exports = {
   clog: (req, msg) => {
     let _auth = typeof req.user == 'undefined' ? '\x1b[1m\x1b[31mUnauthorized\x1b[0m' : '#' + req.user._id + ' \x1b[1m\x1b[36m(' + req.user.name + ')\x1b[0m';
-    console.log('\x1b[32m' + '[' + req.baseUrl + req.path + '] ' + '\x1b[0m' + req.method + ' - ' + _auth + ((typeof msg == 'undefined') ? '' : ' <*>\x1b[33m ' + msg + '\x1b[0m'));
+    if(req.baseUrl == '/admin'){
+      _auth = '\x1b[31mAdmin\x1b[0m'
+    }
+    console.log('\x1b[32m' + ljust('[' + req.baseUrl + req.path + '] ', 15) + '\x1b[0m' + rjust(req.method, 6) + ' - ' + _auth + ((typeof msg == 'undefined') ? '' : ' <*>\x1b[33m ' + msg + '\x1b[0m'));
   },
   unmatches: (subject, wanted_topic, got_topic, st_en_stat) => {
     //return subject.topics.indexOf(got_topic) - subject.topics.indexOf(wanted_topic);

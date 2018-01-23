@@ -10,7 +10,7 @@ const morgan = require('morgan');
 
 const _clog = require('./utils').clog;
 
-const API_VER = '0.5.1-alpha';
+const API_VER = '0.5.3-alpha';
 
 mongoose.Promise = global.Promise;
 

@@ -36,8 +36,7 @@ router.post('/local', vF(['email', 'password']), (req, res, next) => {
             algorithm: 'HS256',
             expiresIn: '24000h'
           });
-          console.log('\n[/auth/local] User #' + found_user._id + ' (' + found_user.name + ') has logged in');
-          console.log('[/auth/local] JWT token: ' + token);
+          console.log('\n[/auth/local] User #' + found_user._id + ' (' + found_user.name + ') has logged in\n');
           return res.status(200).json({
             success: true,
             token: 'JWT ' + token,

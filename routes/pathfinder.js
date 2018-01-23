@@ -13,7 +13,7 @@ const vF = validate.validateFields;
 const _clog = require('../utils').clog;
 
 router.post('/', jwtAuthenticate('user'), vF(['request']), (req, res, next) => {
-  _clog(req, 'new post');
+  _clog(req, '[incoming post request]');
   pathfinder(req.body.request, (err, ret) => {
     if(err){
       return res.status(500).json({

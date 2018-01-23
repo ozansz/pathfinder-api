@@ -1,6 +1,6 @@
 {
   "name": "pathfinder",
-  "version": "0.5.1",
+  "version": "0.5.3",
   "description": "sii pılas odtü ieee hackathon project - codename pathfinder",
   "main": "app.js",
   "scripts": {
