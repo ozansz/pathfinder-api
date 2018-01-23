@@ -1,0 +1,27 @@
+{
+  "name": "pathfinder",
+  "version": "0.3.3",
+  "description": "sii pılas odtü ieee hackathon project - codename pathfinder",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app"
+  },
+  "dependencies": {
+    "bcryptjs": "*",
+    "blueimp-md5": "^2.10.0",
+    "body-parser": "*",
+    "cors": "*",
+    "express": "*",
+    "jsonwebtoken": "*",
+    "mongoose": "*",
+    "morgan": "^1.9.0",
+    "passport": "*",
+    "passport-facebook": "^2.1.1",
+    "passport-google-oauth": "^1.0.0",
+    "sloc": "^0.2.0",
+    "uuid": "^3.2.1"
+  },
+  "author": "sii pılas divıloopır tiim",
+  "license": "Apache-2.0"
+}
