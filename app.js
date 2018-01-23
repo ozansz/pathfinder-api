@@ -39,16 +39,6 @@ const port = 3000;
 app.use(cors());
 
 app.use(bodyParser.json());
-//app.use(passport.initialize());
-//app.use(passport.session());
-
-/*
-app.use((req, res, next) => {
-  let _auth = typeof req.user == 'undefined' ? 'Unauthorized' : req.user._id;
-  console.log('[APP] ' + req.method + ' ' + req.path + ' (' + _auth + ')');
-  next();
-});
-*/
 
 app.use('/users', users);
 app.use('/pf', pathfinder);

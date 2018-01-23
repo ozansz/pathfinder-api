@@ -33,7 +33,6 @@ module.exports = {
     console.log('[' + logtime + '] ' + '\x1b[32m' + '[' + ljust(req.baseUrl + req.path, 14) + '] ' + '\x1b[0m' + rjust(req.method, 6) + ' - ' + _auth + ((typeof msg == 'undefined') ? '' : ' <*>\x1b[33m ' + msg + '\x1b[0m'));
   },
   unmatches: (subject, wanted_topic, got_topic, st_en_stat) => {
-    //return subject.topics.indexOf(got_topic) - subject.topics.indexOf(wanted_topic);
     let _ret = subject.topics.indexOf(got_topic) - subject.topics.indexOf(wanted_topic);
     if(st_en_stat == 'start' && _ret < 0){
       return 0;

@@ -31,7 +31,7 @@ router.post('/', jwtAuthenticate('user'), vF(['request']), (req, res, next) => {
       if(ret._path.length == 0){
         return res.status(404).json({
           success: false,
-          msg: 'No resources found for specified shit'
+          msg: 'No resources found for specified request'
         });
       }
       if(ret._path.length == 1){

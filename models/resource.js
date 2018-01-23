@@ -126,7 +126,6 @@ Resource.getNClosest = (query, N, optimize, _opt, callback) => {
 Resource._sgetOptimal = (path_, query, savior) => {
   let found_res;
   try {
-    //let found_res = searchJson(query, savior);
     found_res = _.filter(savior, query);
   } catch (e) {
     return {err: e, ret: null};

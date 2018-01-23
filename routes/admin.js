@@ -7,6 +7,8 @@ const validate = require('../middleware/validate');
 const Subject = require('../models/subject').Subject;
 const Resource = require('../models/resource').Resource;
 
+const ysnkey = require('../config/ysnkey');
+
 const vF = validate.validateFields;
 
 const resource_rf = ['name', 'type', 'link', 'price', 'duration',
@@ -57,13 +59,7 @@ router.get('/subjects', (req, res, next) => {
   });
 });
 
-router.post('/subjects', vF(['name', 'topics', 'type']), (req, res, next) => {
-  /*
-  return res.status(403).json({
-    success: false,
-    msg: 'This API call has not been implemented yet'
-  });
-  */
+router.post('/subjects', ysnPass(ysnkey), vF(['name', 'topics', 'type']), (req, res, next) => {
   let newSubject = {
     name: req.body.name,
     topics: req.body.topics,
@@ -118,7 +114,7 @@ router.get('/resources', (req, res, next) => {
   });
 });
 
-router.post('/resources', vF(resource_rf), (req, res, next) => {
+router.post('/resources', ysnPass(ysnkey), vF(resource_rf), (req, res, next) => {
   let newRes = {};
   for(let i = 0; i < resource_rf.length; i++){
     newRes[resource_rf[i]] = req.body[resource_rf[i]];
@@ -144,7 +140,7 @@ router.post('/resources', vF(resource_rf), (req, res, next) => {
   });
 });
 
-router.delete('/resources/:rid', ysnPass('29f189b3bd9abacc3239cd96e82b1409'), (req, res, next) => {
+router.delete('/resources/:rid', ysnPass(ysnkey), (req, res, next) => {
   Resource.removeResByRID(req.params.rid, (err, ret) => {
     if(err){
       return res.status(500).json({

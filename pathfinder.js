@@ -30,19 +30,15 @@ module.exports = (request, callback) => {
           return false;
         }
         if(resources.length == 0){
-          //callback('No resources found for the specified subject: ' + request.subject, null);
           callback(null, {_path: [], fullfilled: false, req: 'all'});
           return true;
         } else {
-          // Test
-          //callback(null, resources);
           let fullfills = [];
           resources.forEach((res) => {
             if(res.contents.includes(request.end_topic)){
               fullfills.push(res);
             }
           });
-          // Start path finding
           if(fullfills.length == 0){
             let selected_one = resources.sort((a, b) => {
               return a.subject.topics.indexOf(b.end_topic) - a.subject.topics.indexOf(a.end_topic);

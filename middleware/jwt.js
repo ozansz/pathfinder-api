@@ -29,7 +29,6 @@ module.exports = function(authorizer, specifiedSecret){
           }
         });
       }
-      // User.findById(decoded.uid, (err, found_user) => {
       User.findOne({_id: decoded.uid}, (err, found_user) => {
         if(err){
           return res.status(500).json({
