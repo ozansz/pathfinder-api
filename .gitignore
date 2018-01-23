@@ -1,3 +1,4 @@
 node_modules/
 BACKUP/
-access.log
+./access.log
+./*.log

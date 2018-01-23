@@ -23,7 +23,7 @@ module.exports = (request, callback) => {
       }
       Resource.getNClosest({'subject.name': request.subject}, 3,
         {start_topic: request.start_topic, end_topic: request.end_topic},
-        {_id: 0, __v: 0, 'requirements._id': 0, 'subject._id': 0, 'subject.__v': 0},
+        {__v: 0, 'requirements._id': 0, 'subject._id': 0, 'subject.__v': 0},
         (err, resources) => {
         if(err){
           callback(err, null);
