@@ -24,7 +24,13 @@ module.exports = {
     if(req.baseUrl == '/admin'){
       _auth = '\x1b[31mAdmin\x1b[0m'
     }
-    console.log('\x1b[32m' + ljust('[' + req.baseUrl + req.path + '] ', 15) + '\x1b[0m' + rjust(req.method, 6) + ' - ' + _auth + ((typeof msg == 'undefined') ? '' : ' <*>\x1b[33m ' + msg + '\x1b[0m'));
+    let _now = new Date();
+    let hrs = _now.getUTCHours();
+    let min = _now.getUTCMinutes();
+    hrs = hrs < 10 ? '0' + hrs : hrs;
+    min = min < 10 ? '0' + min : min;
+    let logtime = hrs + ':' + min;
+    console.log('[' + logtime + '] ' + '\x1b[32m' + ljust('[' + req.baseUrl + req.path + '] ', 14) + '\x1b[0m' + rjust(req.method, 6) + ' - ' + _auth + ((typeof msg == 'undefined') ? '' : ' <*>\x1b[33m ' + msg + '\x1b[0m'));
   },
   unmatches: (subject, wanted_topic, got_topic, st_en_stat) => {
     //return subject.topics.indexOf(got_topic) - subject.topics.indexOf(wanted_topic);
