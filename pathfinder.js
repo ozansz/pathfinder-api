@@ -11,10 +11,14 @@ module.exports = (request, callback) => {
     {start_topic: request.start_topic, end_topic: request.end_topic},
     {_id: 0, __v: 0, 'requirements._id': 0, 'subject._id': 0, 'subject.__v': 0},
     (err, resources) => {
-    if(err) callback(err, null);
+    if(err){
+      callback(err, null);
+      return false;
+    }
     if(resources.length == 0){
       //callback('No resources found for the specified subject: ' + request.subject, null);
       callback(null, []);
+      return true;
     } else {
       // Test
       //callback(null, resources);
@@ -29,16 +33,17 @@ module.exports = (request, callback) => {
         let selected_one = resources.sort((a, b) => {
           return a.subject.topics.indexOf(b.end_topic) - a.subject.topics.indexOf(a.end_topic);
         })[0];
-        let found_path = Resource._sgetOptimal([selected_one], {
-          'subject.name': request.subject,
-          start_topic: selected_one.end_topic,
-          end_topic: request.end_topic
+        Resource.find({'subject.name': request.subject}, (err, _savior) => {
+          let found_path = Resource._sgetOptimal([selected_one], {
+            'start_topic': selected_one.end_topic,
+            'end_topic': request.end_topic
+          }, _savior);
+          if(found_path.err){
+            callback(found_path.err, null);
+          } else {
+            callback(found_path.err, found_path.ret);
+          }
         });
-        if(found_path.err){
-          callback(found_path.err, null);
-        } else {
-          callback(found_path.err, found_path.ret);
-        }
       } else if (fullfills.length == 1){ // One resource fullfills client's wishes
         callback(null, fullfills);
       } else { // But first, let me sort 'em!

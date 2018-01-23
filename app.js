@@ -65,7 +65,7 @@ app.use('/api/:path', (req, res) => {
 
 app.get('/', (req, res) => {
   res.status(200).json({
-    api_version: '0.3.3-alpha'
+    api_version: '0.4.3-alpha'
   });
 });
 

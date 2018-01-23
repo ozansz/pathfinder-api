@@ -30,6 +30,13 @@ router.post('/', jwtAuthenticate('user'), vF(['request']), (req, res, next) => {
       console.log('PATH:', _path);
       console.log('\nPATH_LENGTH:', _path.length);
       _clog(req, req.body.request.subject + ' | ' + req.body.request.start_topic + ' => ' + req.body.request.end_topic + ' | ' + ((_path.length > 0) ? _path.length : 'No') + ' matches');
+      if(_path.length == 0){
+        return res.status(404).json({
+          success: false,
+          msg: 'No resources found for specified shit',
+          n_path: _path.length
+        });
+      }
       if(_path.length == 1){
         return res.status(200).json({
           success: true,
