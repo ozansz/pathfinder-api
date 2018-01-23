@@ -14,45 +14,50 @@ const _clog = require('../utils').clog;
 
 router.post('/', jwtAuthenticate('user'), vF(['request']), (req, res, next) => {
   _clog(req, 'new post');
-  pathfinder(req.body.request, (err, _path) => {
+  pathfinder(req.body.request, (err, ret) => {
     if(err){
       return res.status(500).json({
         success: false,
         err: err,
         msg: 'Unexpected error',
         debug: {
-          '_path': _path,
+          'ret': ret,
           'req.body': req.body
         }
       });
     }
-    if(_path){
-      console.log('PATH:', _path);
-      console.log('\nPATH_LENGTH:', _path.length);
-      _clog(req, req.body.request.subject + ' | ' + req.body.request.start_topic + ' => ' + req.body.request.end_topic + ' | ' + ((_path.length > 0) ? _path.length : 'No') + ' matches');
-      if(_path.length == 0){
+    if(ret){
+      _clog(req, req.body.request.subject + ' | ' + req.body.request.start_topic + ' => ' + req.body.request.end_topic + ' | ' + ((ret._path.length > 0) ? ret._path.length : 'No') + ' matches');
+      if(ret._path.length == 0){
         return res.status(404).json({
           success: false,
-          msg: 'No resources found for specified shit',
-          n_path: _path.length
+          msg: 'No resources found for specified shit'
         });
       }
-      if(_path.length == 1){
+      if(ret._path.length == 1){
         return res.status(200).json({
           success: true,
-          resource: _path[0],
-          n_path: _path.length
+          resource: ret._path[0],
+          n_path: ret._path.length,
+          fullfillment: ret.fullfilled,
+          req: typeof ret.req == 'undefined' ? []: ret.req
         });
       }
       return res.status(200).json({
         success: true,
-        path: _path,
-        n_path: _path.length
+        path: ret._path,
+        n_path: ret._path.length,
+        fullfillment: ret.fullfilled,
+        req: typeof ret.req == 'undefined' ? []: ret.req
       });
     } else {
       return res.json({
         success: false,
-        msg: 'Couldn\'t create a path'
+        msg: 'Couldn\'t create a path',
+        debug: {
+          ret: ret,
+          path: ret._path
+        }
       });
     }
   });

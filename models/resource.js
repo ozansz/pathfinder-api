@@ -95,37 +95,28 @@ Resource.removeResByRID = function(rid, callback){
 }
 
 Resource.getNClosest = (query, N, optimize, _opt, callback) => {
-  console.log('[+] IN GET_N_CLOSEST');
   if(typeof _opt == 'function'){
     callback = _opt;
     _opt = {__v: 0, 'subject.__v': 0};
   }
   Resource.find(query, _opt, (err, found_res) => {
     if(err){
-      console.log('[+] OUT GET_N_CLOSEST ERR');
       callback(err, []);
       return false;
     }
     if(found_res.length == 0){
-      console.log('[+] OUT GET_N_CLOSEST 0');
       callback('No resources found for query: ' + query, []);
     } else {
-      found_res = filterRes(found_res, optimize.start_topic, optimize.end_topic);
-      if(found_res.length == 0){
-        console.log('[+] OUT GET_N_CLOSEST 0 0');
-        callback(null, []);
-      } else {
-        console.log('[+] OUT GET_N_CLOSEST 0 !0');
-        callback(null, resSort(found_res, found_res[0].subject, optimize.start_topic, optimize.end_topic, unmatches).slice(0, N));
-      }
+      callback(null, resSort(found_res, found_res[0].subject, optimize.start_topic, optimize.end_topic, unmatches).slice(0, N));
     }
   });
 }
 
 Resource._sgetOptimal = (path_, query, savior) => {
+  let found_res;
   try {
     //let found_res = searchJson(query, savior);
-    let found_res = _.filter(savior, query);
+    found_res = _.filter(savior, query);
   } catch (e) {
     return {err: e, ret: null};
   }
@@ -134,13 +125,18 @@ Resource._sgetOptimal = (path_, query, savior) => {
       query.start_topic = path_[0].subject.topics[path_[0].subject.topics.indexOf(query.start_topic) - 1];
       return Resource._sgetOptimal(path_, query, _opt);
     } else {
-      return {err: false, ret: null};
+      return {
+        err: false,
+        ret: path_,
+        fullfilled: false,
+        req: path_[0].subject.topics.slice(path_[0].subject.topics.indexOf(query.start_topic + 1))
+      };
     }
   } else {
     found_res = found_res.sort((a, b) => {
       return ratingAvg(b) - ratingAvg(a);
     })[0];
-    return {err: false, ret: path_.concat(found_res)};
+    return {err: false, ret: path_.concat(found_res), fullfilled: true, req: null};
   }
 }
 
