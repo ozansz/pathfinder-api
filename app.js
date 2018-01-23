@@ -10,6 +10,8 @@ const morgan = require('morgan');
 
 const _clog = require('./utils').clog;
 
+const API_VER = '0.5.1-alpha';
+
 mongoose.Promise = global.Promise;
 
 mongoose.connect(config.database);
@@ -65,7 +67,7 @@ app.use('/api/:path', (req, res) => {
 
 app.get('/', (req, res) => {
   res.status(200).json({
-    api_version: '0.4.3-alpha'
+    api_version: API_VER
   });
 });
 
