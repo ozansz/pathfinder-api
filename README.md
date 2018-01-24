@@ -26,7 +26,7 @@ or use `nodemon` instead.
 ## API Endpoints
 In our RESTful API design, the response schema is strictly defined, which always uses right HTTP response codes with a appropriate JSON document, as must always be in every RESTful API.
 
-Frequenty used HTTP response codes could be listed as: `200` and `201`, for successful requests; `307` for most redirects; `400`, `401`, `403`, `404` and `409` when the client has done something wrong; and `500` for almost every mistake whick has been made by the server.
+Frequenty used HTTP response codes could be listed as: `200` and `201`, for successful requests; `307` for most redirects; `400`, `401`, `403`, `404` and `409` when the client has done something wrong; and `500` for almost every mistake which has been made by the server.
 
 ### User Registration and Authentication
 
