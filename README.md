@@ -1,5 +1,7 @@
-# pathfinder-api (v0.7-beta)
+# pathfinder-api
 A minimal RESTful API service based on Node.js with Express.js, powering our learning-path-finder algorithm
+
+**API Version** : v0.7-beta
 
 ## Installation and Starting
 Clone the repo and cd into the project directory. To install the required packages, just type and run the commands below
