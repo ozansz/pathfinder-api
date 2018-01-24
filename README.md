@@ -49,3 +49,14 @@ Note that all email fields in the `users` collection are **unique**, and **canno
 **Response** : For a valid request when client has sent the correct credentials, the server responds with a JSON document `{success: true, token: <new-jwt>, name: <user-name>}` with the HTTP response code set to 200. In invalid requests, i.e wrong password, the server responds with a JSON document `{success: false, msg: <failure-message>}` with the HTTP response code set to either one of 401 and 404.
 
 The object structure of the created JWT is defined as `{authorization: 'user', uid: found_user._id}` in **routes/admin.js**. The client **has to** keep that token in a safe place and send it to the server in the *Authorizaion* header  **every time** one needs to request a service / api call that requires user authorization.
+
+### Fetching Subject Data
+
+#### /pf/subjects
+**Method** : GET
+
+**Required Headers** : `Authorizaion`, the unique JWT which sent by server
+
+**Response** : For a valid request when client has set the `Authorizaion` header to right token, the server responds with a JSON document `{success: true, subjects: [<each-subject>]}` with the HTTP response code set to `200`. In case of an invalid request, when the `Authorizaion` header is not set or is set to a wrong value, or when the token is expired, the server responds with a JSON document `{success: false, msg: <failure-message>}` with the HTTP response code set to `404`.
+
+The object structure of the sent `subject` JSON document field is an array of JSON representation of `Subject` objects defined in **models/subject.js**
