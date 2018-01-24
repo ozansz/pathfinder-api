@@ -1,4 +1,4 @@
-# pathfinder-api
+# pathfinder-api (v0.7-beta)
 A minimal RESTful API service based on Node.js with Express.js, powering our learning-path-finder algorithm
 
 ## Installation and Starting
