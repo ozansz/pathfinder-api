@@ -1,6 +1,6 @@
 {
   "name": "pathfinder",
-  "version": "0.5.3",
+  "version": "0.7.0",
   "description": "sii pılas odtü ieee hackathon project - codename pathfinder",
   "main": "app.js",
   "scripts": {
@@ -20,6 +20,6 @@
     "sloc": "^0.2.0",
     "uuid": "^3.2.1"
   },
-  "author": "sii pılas divıloopır tiim",
+  "author": "sii pılas divıloopır tiim adına Ozan Sazak",
   "license": "Apache-2.0"
 }

@@ -5,6 +5,7 @@ const SubjectSchema = require('./subject').SubjectSchema;
 const Subject = require('./subject').Subject;
 
 const resSort = require('../utils').resSort;
+const resSortBPrefType = require('../utils').resSortBPrefType;
 const unmatches = require('../utils').unmatches;
 const filterRes = require('../utils').filterRes;
 const ratingAvg = require('../utils').ratingAvg;
@@ -118,23 +119,27 @@ Resource.getNClosest = (query, N, optimize, _opt, callback) => {
     if(found_res.length == 0){
       callback('No resources found for query: ' + query, []);
     } else {
-      callback(null, resSort(found_res, found_res[0].subject, optimize.start_topic, optimize.end_topic, unmatches).slice(0, N));
+      callback(null, resSortBPrefType(resSort(found_res, found_res[0].subject, optimize.start_topic, optimize.end_topic, unmatches), optimize.pref_type).slice(0, N));
     }
   });
 }
 
 Resource._sgetOptimal = (path_, query, savior) => {
+  //console.log('[+] Call _sgetOptimal with start: ' + query.start_topic + ' & end: ' + query.end_topic);
   let found_res;
   try {
     found_res = _.filter(savior, query);
   } catch (e) {
+    //console.log('[+] Nothing found');
     return {err: e, ret: null};
   }
   if(found_res.length == 0){
-    if(path_[0].subject.topics.indexOf(query.start_topic) > path_[0].subject.topics.indexOf(path_[0].end_topic)){
+    if(path_[0].subject.topics.indexOf(query.start_topic) <= path_[0].subject.topics.indexOf(path_[0].end_topic)){
       query.start_topic = path_[0].subject.topics[path_[0].subject.topics.indexOf(query.start_topic) - 1];
-      return Resource._sgetOptimal(path_, query, _opt);
+      //console.log('[+] Recall');
+      return Resource._sgetOptimal(path_, query, savior);
     } else {
+      //console.log('[+] Overflow returned');
       return {
         err: false,
         ret: path_,
@@ -146,6 +151,7 @@ Resource._sgetOptimal = (path_, query, savior) => {
     found_res = found_res.sort((a, b) => {
       return ratingAvg(b) - ratingAvg(a);
     })[0];
+    //console.log('[+] Path found');
     return {err: false, ret: path_.concat(found_res), fullfilled: true, req: null};
   }
 }

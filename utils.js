@@ -50,6 +50,23 @@ module.exports = {
         unm_f(subject, w_end, b.end_topic, 'end');
     });
   },
+  resSortBPrefType: (res_array, pref_type) => {
+    return res_array.sort((a, b) => {
+      if(a.type == pref_type){
+        if(b.type == pref_type){
+          return 0;
+        } else {
+          return -1;
+        }
+      } else {
+        if(b.type == pref_type){
+          return 1;
+        } else {
+          return 0;
+        }
+      }
+    });
+  },
   filterRes: (res_array, start_topic, end_topic) => {
     let _ret = [];
     res_array.forEach((elem) => {
