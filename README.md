@@ -17,15 +17,13 @@ $ npm start
 or use `nodemon` instead.
 
 ## Used Packages
-**expressjs**, has always been a good friend.
-
-**mongoose**, for an easier and faster communication with MongoDB database.
-
-**jsonwebtoken**, to not to use sessions and avoid using cookies; we're using JWTs instead.
-
-**bcryptjs**, to hash passwords.
-
-**body-parser**, to handle application/json requests efficiently.
+<ul>
+  <li>**expressjs**, has always been a good friend.</li>
+  <li>**mongoose**, for an easier and faster communication with MongoDB database.</li>
+  <li>**jsonwebtoken**, to not to use sessions and avoid using cookies; we're using JWTs instead.</li>
+  <li>**bcryptjs**, to hash passwords.</li>
+  <li>**body-parser**, to handle application/json requests efficiently.</li>
+</ul>
 
 ## API Endpoints
 In our RESTful API design, the response schema is strictly defined, which always uses right HTTP response codes with a appropriate JSON document, as must always be in every RESTful API.
