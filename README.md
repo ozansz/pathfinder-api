@@ -18,11 +18,11 @@ or use `nodemon` instead.
 
 ## Used Packages
 <ul>
-  <li>**expressjs**, has always been a good friend.</li>
-  <li>**mongoose**, for an easier and faster communication with MongoDB database.</li>
-  <li>**jsonwebtoken**, to not to use sessions and avoid using cookies; we're using JWTs instead.</li>
-  <li>**bcryptjs**, to hash passwords.</li>
-  <li>**body-parser**, to handle application/json requests efficiently.</li>
+  <li><b>expressjs</b>, has always been a good friend.</li>
+  <li><b>mongoose</b>, for an easier and faster communication with MongoDB database.</li>
+  <li><b>jsonwebtoken</b>, to not to use sessions and avoid using cookies; we're using JWTs instead.</li>
+  <li><b>bcryptjs</b>, to hash passwords.</li>
+  <li><b>body-parser</b>, to handle application/json requests efficiently.</li>
 </ul>
 
 ## API Endpoints
