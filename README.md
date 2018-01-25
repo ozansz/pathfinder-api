@@ -18,9 +18,13 @@ or use `nodemon` instead.
 
 ## Used Packages
 **expressjs**, has always been a good friend.
+
 **mongoose**, for an easier and faster communication with MongoDB database.
+
 **jsonwebtoken**, to not to use sessions and avoid using cookies; we're using JWTs instead.
+
 **bcryptjs**, to hash passwords.
+
 **body-parser**, to handle application/json requests efficiently.
 
 ## API Endpoints
